@@ -1,36 +1,151 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Island Skies Astro
 
-## Getting Started
+An AstroBin-style gallery website built with Next.js, TypeScript, and Tailwind CSS, hosted on Google Cloud Platform.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Gallery Grid**: Clean, responsive grid layout with hover effects
+- **Image Details**: Dedicated pages with metadata panels and navigation
+- **Fullscreen Viewer**: Zoom, pan, and keyboard controls for detailed viewing
+- **Articles**: MDX-based blog system with SEO optimization
+- **About Page**: Distinctive design with equipment lists and social links
+- **SEO Optimized**: Sitemap, robots.txt, and metadata for all pages
+- **Cloud Deployment**: Ready for Google Cloud Run deployment
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router) + TypeScript
+- **Styling**: Tailwind CSS (dark theme)
+- **Content**: MDX for articles, JSON for gallery data
+- **Deployment**: Google Cloud Run + Cloud Storage + Cloud CDN
+- **CI/CD**: Google Cloud Build
+
+## Quick Start
+
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+2. **Set up environment variables**:
+   Create `.env.local` with:
+   ```
+   NEXT_PUBLIC_MEDIA_BASE_URL=https://storage.googleapis.com/islandskiesastro-media
+   NEXT_PUBLIC_STATIC_BASE_URL=https://storage.googleapis.com/islandskiesastro-static
+   WEB_IMAGES_INDEX=web_images.json
+   SITE_NAME=Island Skies Astro
+   ```
+
+3. **Run development server**:
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production**:
+   ```bash
+   npm run build
+   ```
+
+## Project Structure
+
+```
+islandskiesastro/
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   │   ├── gallery/[id]/       # Gallery detail pages
+│   │   ├── articles/           # Article pages
+│   │   └── about/              # About page
+│   ├── components/             # React components
+│   └── lib/                    # Utilities and types
+├── content/
+│   └── articles/               # MDX article files
+├── data/
+│   └── web_images.json         # Gallery data
+├── scripts/
+│   └── generate-thumbnails.ts  # Thumbnail generation
+├── Dockerfile                  # Container configuration
+└── cloudbuild.yaml            # CI/CD pipeline
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Gallery Data Format
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The gallery uses `data/web_images.json` with this structure:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```json
+[
+  {
+    "objectId": "m31",
+    "displayName": "Andromeda Galaxy",
+    "ra": 0.7123138889,
+    "dec": 41.26875,
+    "constellation": "Andromeda",
+    "imageFilename": "m31.jpg",
+    "height": 2800,
+    "width": 4100
+  }
+]
+```
 
-## Learn More
+## Thumbnail Generation
 
-To learn more about Next.js, take a look at the following resources:
+Generate WebP thumbnails for your images:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Generate thumbnails (requires original images in data/images/)
+npx tsx scripts/generate-thumbnails.ts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Upload to Google Cloud Storage
+npx tsx scripts/generate-thumbnails.ts upload
+```
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Google Cloud Setup
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Create GCP project**:
+   ```bash
+   gcloud projects create IslandSkiesAstro
+   gcloud config set project IslandSkiesAstro
+   ```
+
+2. **Enable services**:
+   ```bash
+   gcloud services enable run.googleapis.com cloudbuild.googleapis.com storage.googleapis.com
+   ```
+
+3. **Create storage buckets**:
+   ```bash
+   gsutil mb gs://islandskiesastro-media
+   gsutil mb gs://islandskiesastro-static
+   gsutil iam ch allUsers:objectViewer gs://islandskiesastro-media
+   gsutil iam ch allUsers:objectViewer gs://islandskiesastro-static
+   ```
+
+4. **Upload gallery data**:
+   ```bash
+   gsutil cp data/web_images.json gs://islandskiesastro-static/
+   ```
+
+5. **Deploy with Cloud Build**:
+   ```bash
+   gcloud builds submit --config cloudbuild.yaml
+   ```
+
+## Development
+
+- **Type checking**: `npm run typecheck`
+- **Linting**: `npm run lint`
+- **Build**: `npm run build`
+- **Start**: `npm start`
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+MIT License - see LICENSE file for details.

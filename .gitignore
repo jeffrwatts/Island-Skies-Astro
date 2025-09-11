@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Image files - served from Google Cloud Storage
+data/images/
+public/images/
+public/thumbs/
+temp_backup/
+temp-thumbs-*
+
+# Development scripts
+scripts/
