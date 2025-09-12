@@ -73,14 +73,15 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(4px);
             opacity: 0;
             transition: all 0.2s ease;
             pointer-events: none;
+            border: 2px solid rgba(255, 255, 255, 0.2);
           }
           
           .nav-arrow-left {
@@ -91,7 +92,7 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             right: 1rem;
           }
           
-          @media (orientation: landscape) {
+          @media (orientation: landscape), (min-width: 768px) {
             .gallery-container {
               flex-direction: row;
               align-items: center;
@@ -117,18 +118,26 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             }
             
             .nav-arrow {
-              opacity: 0.6;
+              opacity: 0.7;
               pointer-events: auto;
             }
             
             .nav-arrow:hover {
               opacity: 1;
-              background-color: rgba(0, 0, 0, 0.5);
+              background-color: rgba(0, 0, 0, 0.6);
               transform: translateY(-50%) scale(1.1);
             }
             
             .nav-arrow:active {
               transform: translateY(-50%) scale(0.95);
+            }
+          }
+          
+          /* Additional mobile landscape detection */
+          @media (max-height: 500px) and (min-width: 600px) {
+            .nav-arrow {
+              opacity: 0.7 !important;
+              pointer-events: auto !important;
             }
           }
         `
@@ -153,7 +162,7 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
                 className="nav-arrow nav-arrow-left"
                 aria-label="Previous image"
               >
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m15 18-6-6 6-6"/>
                 </svg>
               </Link>
@@ -165,7 +174,7 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
                 className="nav-arrow nav-arrow-right"
                 aria-label="Next image"
               >
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m9 18 6-6-6-6"/>
                 </svg>
               </Link>

@@ -1,15 +1,15 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-docker.pkg.dev/islandskiesastro/web-repo/site:$SHORT_SHA', '.']
+    args: ['build', '-t', 'us-docker.pkg.dev/islandskiesastro/web-repo/site:$BUILD_ID', '.']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-docker.pkg.dev/islandskiesastro/web-repo/site:$SHORT_SHA']
+    args: ['push', 'us-docker.pkg.dev/islandskiesastro/web-repo/site:$BUILD_ID']
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       - run
       - deploy
       - islandskiesastro-web
-      - --image=us-docker.pkg.dev/islandskiesastro/web-repo/site:$SHORT_SHA
+      - --image=us-docker.pkg.dev/islandskiesastro/web-repo/site:$BUILD_ID
       - --region=us-central1
       - --platform=managed
       - --allow-unauthenticated
@@ -19,4 +19,4 @@ steps:
       - --min-instances=0
       - --max-instances=10
 images:
-  - us-docker.pkg.dev/islandskiesastro/web-repo/site:$SHORT_SHA
+  - us-docker.pkg.dev/islandskiesastro/web-repo/site:$BUILD_ID
