@@ -45,6 +45,7 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             min-height: 0;
             width: 100%;
             position: relative;
+            margin-top: 4rem; /* Add space for close button in portrait */
           }
           
           .details-container {
@@ -104,6 +105,10 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             z-index: 30;
           }
           
+          .close-button-landscape {
+            display: none; /* Hidden in portrait mode */
+          }
+          
           @media (orientation: landscape), (min-width: 768px) {
             .gallery-container {
               flex-direction: row;
@@ -116,6 +121,7 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
               height: 100%;
               align-items: center;
               justify-content: center;
+              margin-top: 0; /* Remove margin in landscape */
             }
             
             .details-container {
@@ -126,9 +132,15 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             }
             
             .close-button {
+              display: none; /* Hide the main close button in landscape */
+            }
+            
+            .close-button-landscape {
+              display: block;
               position: absolute;
               top: 0.5rem;
-              right: calc(50% + 0.5rem); /* Position over the information panel */
+              right: 0.5rem;
+              z-index: 30;
             }
             
           }
@@ -181,6 +193,10 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
         </div>
         
         <div className="details-container">
+          {/* Close button for landscape mode - positioned over information panel */}
+          <div className="close-button-landscape">
+            <DetailPaneCloseButton onClose={() => router.push('/')} />
+          </div>
           <ImageDetailsPanel 
             image={image} 
           />
