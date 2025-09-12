@@ -96,6 +96,14 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             transform: translateY(-50%) scale(0.95);
           }
           
+          /* Close button positioning */
+          .close-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            z-index: 30;
+          }
+          
           @media (orientation: landscape), (min-width: 768px) {
             .gallery-container {
               flex-direction: row;
@@ -117,15 +125,23 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
               margin-left: 0.5rem;
             }
             
+            .close-button {
+              position: absolute;
+              top: 0.5rem;
+              right: calc(50% + 0.5rem); /* Position over the information panel */
+            }
+            
           }
           
         `
       }} />
       <div className="gallery-container">
-        <div className="image-container">
-          {/* Close button - positioned in upper right corner */}
+        {/* Close button - positioned in upper right corner */}
+        <div className="close-button">
           <DetailPaneCloseButton onClose={() => router.push('/')} />
-          
+        </div>
+        
+        <div className="image-container">
           <div style={{ position: 'relative', display: 'inline-block' }}>
             <img
               src={`${config.mediaBaseUrl}/thumbs/${config.thumbnailSizes.large}/${image.imageFilename.replace(/\.[^.]+$/, '')}.webp`}
