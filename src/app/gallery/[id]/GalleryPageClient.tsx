@@ -78,9 +78,9 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             border-radius: 20px;
             background-color: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(6px);
-            opacity: 0;
+            opacity: 0.4;
             transition: all 0.2s ease;
-            pointer-events: none;
+            pointer-events: auto;
             border: 1px solid rgba(255, 255, 255, 0.15);
           }
           
@@ -90,6 +90,16 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
           
           .nav-arrow-right {
             right: 1rem;
+          }
+          
+          .nav-arrow:hover {
+            opacity: 0.7;
+            background-color: rgba(0, 0, 0, 0.3);
+            transform: translateY(-50%) scale(1.05);
+          }
+          
+          .nav-arrow:active {
+            transform: translateY(-50%) scale(0.95);
           }
           
           @media (orientation: landscape), (min-width: 768px) {
@@ -116,30 +126,8 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             .portrait-control-bar {
               display: none;
             }
-            
-            .nav-arrow {
-              opacity: 0.4;
-              pointer-events: auto;
-            }
-            
-            .nav-arrow:hover {
-              opacity: 0.7;
-              background-color: rgba(0, 0, 0, 0.3);
-              transform: translateY(-50%) scale(1.05);
-            }
-            
-            .nav-arrow:active {
-              transform: translateY(-50%) scale(0.95);
-            }
           }
           
-          /* Additional mobile landscape detection */
-          @media (max-height: 500px) and (min-width: 600px) {
-            .nav-arrow {
-              opacity: 0.4 !important;
-              pointer-events: auto !important;
-            }
-          }
         `
       }} />
       <div className="gallery-container">
