@@ -73,8 +73,8 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 80px;
-            height: 40px;
+            width: 40px;
+            height: 80px;
             border-radius: 20px;
             background-color: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(6px);
