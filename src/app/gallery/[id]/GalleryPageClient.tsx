@@ -56,12 +56,6 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             position: relative;
           }
           
-          .portrait-control-bar {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            z-index: 20;
-          }
           
           .nav-arrow {
             position: absolute;
@@ -123,15 +117,15 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
               margin-left: 0.5rem;
             }
             
-            .portrait-control-bar {
-              display: none;
-            }
           }
           
         `
       }} />
       <div className="gallery-container">
         <div className="image-container">
+          {/* Close button - positioned in upper right corner */}
+          <DetailPaneCloseButton onClose={() => router.push('/')} />
+          
           <div style={{ position: 'relative', display: 'inline-block' }}>
             <img
               src={`${config.mediaBaseUrl}/thumbs/${config.thumbnailSizes.large}/${image.imageFilename.replace(/\.[^.]+$/, '')}.webp`}
@@ -168,15 +162,9 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
               </Link>
             )}
           </div>
-          
-          {/* Portrait control bar */}
-          <div className="portrait-control-bar">
-            <DetailPaneCloseButton onClose={() => router.push('/')} />
-          </div>
         </div>
         
         <div className="details-container">
-          <DetailPaneCloseButton onClose={() => router.push('/')} />
           <ImageDetailsPanel 
             image={image} 
           />
