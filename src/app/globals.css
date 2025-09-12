@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0a;
+  --background: #1f2937;
   --foreground: #ededed;
 }
 
 body {
-  background: var(--background);
+  background: var(--background) !important;
   color: var(--foreground);
   font-family: system-ui, -apple-system, sans-serif;
 }
@@ -16,4 +16,59 @@ body {
 /* Dark theme by default */
 html {
   color-scheme: dark;
+  background: var(--background) !important;
+}
+
+/* Force gray background on all main containers */
+.min-h-screen {
+  background-color: #1f2937 !important;
+}
+
+/* Override any Tailwind background classes */
+.bg-gray-800 {
+  background-color: #1f2937 !important;
+}
+
+.bg-gray-900 {
+  background-color: #1f2937 !important;
+}
+
+/* Force background on body and html */
+html, body {
+  background-color: #1f2937 !important;
+}
+
+/* Override any blue backgrounds */
+.bg-blue-600, .bg-blue-700, .bg-blue-800, .bg-blue-900 {
+  background-color: #1f2937 !important;
+}
+
+/* Force background on all elements */
+* {
+  background-color: #1f2937 !important;
+}
+
+/* But restore specific elements */
+.text-white, .text-gray-300, .text-gray-400, .text-gray-500,
+img, .bg-black, .bg-gray-700, .bg-gray-800, .bg-gray-900 {
+  background-color: transparent !important;
+}
+
+/* Restore button backgrounds */
+button, .bg-blue-600, .bg-blue-700 {
+  background-color: rgba(37, 99, 235, 1) !important;
+}
+
+/* Nuclear option - override everything with maximum specificity */
+html[style*="background-color"] {
+  background-color: #1f2937 !important;
+}
+
+body[style*="background-color"] {
+  background-color: #1f2937 !important;
+}
+
+/* Override any inline styles */
+html[style], body[style] {
+  background-color: #1f2937 !important;
 }

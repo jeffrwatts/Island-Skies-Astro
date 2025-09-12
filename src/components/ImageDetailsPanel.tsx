@@ -1,18 +1,11 @@
-import Link from 'next/link';
 import { NormalizedImage } from '@/lib/types';
 
 interface ImageDetailsPanelProps {
   image: NormalizedImage;
-  prevId: string | null;
-  nextId: string | null;
-  onImageClick: () => void;
 }
 
 export default function ImageDetailsPanel({ 
-  image, 
-  prevId, 
-  nextId, 
-  onImageClick 
+  image
 }: ImageDetailsPanelProps) {
   const formatCoordinate = (coord: number, isRA: boolean) => {
     if (isRA) {
@@ -52,39 +45,6 @@ export default function ImageDetailsPanel({
         <span className="text-gray-500 text-sm">Dimensions</span>
         <p className="text-white">{image.width} × {image.height} pixels</p>
       </div>
-      
-      {/* Navigation */}
-      <div className="flex justify-between mb-6">
-        {prevId ? (
-          <Link 
-            href={`/gallery/${prevId}`}
-            className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition-colors"
-          >
-            ← Previous
-          </Link>
-        ) : (
-          <div></div>
-        )}
-        
-        {nextId ? (
-          <Link 
-            href={`/gallery/${nextId}`}
-            className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition-colors"
-          >
-            Next →
-          </Link>
-        ) : (
-          <div></div>
-        )}
-      </div>
-      
-      {/* Fullscreen button */}
-      <button
-        onClick={onImageClick}
-        className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
-      >
-        View Fullscreen
-      </button>
     </div>
   );
 }

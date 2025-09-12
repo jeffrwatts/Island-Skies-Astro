@@ -35,9 +35,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} antialiased bg-gray-900 text-white min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} antialiased text-white min-h-screen flex flex-col`}
+            style={{ backgroundColor: '#1f2937' }}
+        suppressHydrationWarning={true}
       >
         <Navbar />
         <main className="flex-1">

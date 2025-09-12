@@ -11,7 +11,7 @@ export default function Navbar() {
   return (
     <nav className="bg-gray-900 border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 sm:space-x-3">
             <Image 
@@ -19,11 +19,11 @@ export default function Navbar() {
               alt="Island Skies Astro Logo" 
               width={80} 
               height={80}
-              className="h-12 w-auto sm:h-16"
+              className="h-16 w-auto sm:h-20"
             />
             <div className="flex flex-col">
-              <span className="text-white font-semibold text-lg sm:text-xl font-cinzel">{config.siteName}</span>
-              <span className="text-gray-300 text-xs sm:text-sm hidden sm:block">Astrophotography by Jeff Ray Watts</span>
+              <span className="text-white font-semibold text-xl sm:text-2xl font-cinzel">{config.siteName}</span>
+              <span className="text-gray-300 text-sm sm:text-base">Astrophotography by Jeff Ray Watts</span>
             </div>
           </Link>
           
