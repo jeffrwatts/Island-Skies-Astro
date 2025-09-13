@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { NormalizedImage } from '@/lib/types';
 import { config } from '@/lib/config';
 import ScrollLock from '@/components/ScrollLock';
@@ -16,6 +17,7 @@ interface GalleryPageClientProps {
 
 export default function GalleryPageClient({ image, prevId, nextId }: GalleryPageClientProps) {
   const router = useRouter();
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <>
@@ -73,10 +75,15 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             border-radius: 20px;
             background-color: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(6px);
-            opacity: 0.4;
-            transition: all 0.2s ease;
-            pointer-events: auto;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
             border: 1px solid rgba(255, 255, 255, 0.15);
+          }
+          
+          .nav-arrow.loaded {
+            opacity: 0.4;
+            pointer-events: auto;
           }
           
           .nav-arrow-left {
@@ -87,13 +94,13 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             right: 1rem;
           }
           
-          .nav-arrow:hover {
+          .nav-arrow.loaded:hover {
             opacity: 0.7;
             background-color: rgba(0, 0, 0, 0.3);
             transform: translateY(-50%) scale(1.05);
           }
           
-          .nav-arrow:active {
+          .nav-arrow.loaded:active {
             transform: translateY(-50%) scale(0.95);
           }
           
@@ -158,6 +165,7 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             <img
               src={`${config.mediaBaseUrl}/thumbs/${config.thumbnailSizes.large}/${image.imageFilename.replace(/\.[^.]+$/, '')}.webp`}
               alt={`${image.displayName} (${image.objectId})`}
+              onLoad={() => setImageLoaded(true)}
               style={{
                 maxWidth: '100%',
                 maxHeight: '100%',
@@ -165,11 +173,11 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
               }}
             />
             
-            {/* Navigation arrows - transparent in landscape, hidden in portrait */}
+            {/* Navigation arrows - only show after image loads */}
             {prevId && (
               <Link 
                 href={`/gallery/${prevId}`}
-                className="nav-arrow nav-arrow-left"
+                className={`nav-arrow nav-arrow-left ${imageLoaded ? 'loaded' : ''}`}
                 aria-label="Previous image"
               >
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -181,7 +189,7 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             {nextId && (
               <Link 
                 href={`/gallery/${nextId}`}
-                className="nav-arrow nav-arrow-right"
+                className={`nav-arrow nav-arrow-right ${imageLoaded ? 'loaded' : ''}`}
                 aria-label="Next image"
               >
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
