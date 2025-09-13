@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
 import { NormalizedImage } from '@/lib/types';
 import { config } from '@/lib/config';
 import ScrollLock from '@/components/ScrollLock';
@@ -17,16 +16,6 @@ interface GalleryPageClientProps {
 
 export default function GalleryPageClient({ image, prevId, nextId }: GalleryPageClientProps) {
   const router = useRouter();
-  const [imageLoaded, setImageLoaded] = useState(false);
-
-  // Fallback timeout to show arrows even if onLoad doesn't fire
-  useEffect(() => {
-    const fallbackTimer = setTimeout(() => {
-      setImageLoaded(true);
-    }, 2000); // Show arrows after 2 seconds regardless
-
-    return () => clearTimeout(fallbackTimer);
-  }, []);
 
   return (
     <>
@@ -82,19 +71,12 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             width: 40px;
             height: 80px;
             border-radius: 20px;
-            background-color: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(6px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            visibility: hidden;
-          }
-          
-          .nav-arrow.loaded {
-            opacity: 0.4 !important;
-            pointer-events: auto !important;
-            visibility: visible !important;
+            background-color: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(4px);
+            opacity: 0.3;
+            transition: all 0.2s ease;
+            pointer-events: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
           }
           
           .nav-arrow-left {
@@ -105,13 +87,13 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             right: 1rem;
           }
           
-          .nav-arrow.loaded:hover {
-            opacity: 0.7;
-            background-color: rgba(0, 0, 0, 0.3);
+          .nav-arrow:hover {
+            opacity: 0.6;
+            background-color: rgba(0, 0, 0, 0.25);
             transform: translateY(-50%) scale(1.05);
           }
           
-          .nav-arrow.loaded:active {
+          .nav-arrow:active {
             transform: translateY(-50%) scale(0.95);
           }
           
@@ -176,8 +158,6 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             <img
               src={`${config.mediaBaseUrl}/thumbs/${config.thumbnailSizes.large}/${image.imageFilename.replace(/\.[^.]+$/, '')}.webp`}
               alt={`${image.displayName} (${image.objectId})`}
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageLoaded(true)} // Show arrows even if image fails to load
               style={{
                 maxWidth: '100%',
                 maxHeight: '100%',
@@ -185,11 +165,11 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
               }}
             />
             
-            {/* Navigation arrows - only show after image loads */}
+            {/* Navigation arrows - always visible but subtle */}
             {prevId && (
               <Link 
                 href={`/gallery/${prevId}`}
-                className={`nav-arrow nav-arrow-left ${imageLoaded ? 'loaded' : ''}`}
+                className="nav-arrow nav-arrow-left"
                 aria-label="Previous image"
               >
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -201,7 +181,7 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             {nextId && (
               <Link 
                 href={`/gallery/${nextId}`}
-                className={`nav-arrow nav-arrow-right ${imageLoaded ? 'loaded' : ''}`}
+                className="nav-arrow nav-arrow-right"
                 aria-label="Next image"
               >
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
