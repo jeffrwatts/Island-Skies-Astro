@@ -22,17 +22,11 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
   // Fallback timeout to show arrows even if onLoad doesn't fire
   useEffect(() => {
     const fallbackTimer = setTimeout(() => {
-      console.log('Fallback timer triggered - showing arrows');
       setImageLoaded(true);
     }, 2000); // Show arrows after 2 seconds regardless
 
     return () => clearTimeout(fallbackTimer);
   }, []);
-
-  // Debug logging
-  useEffect(() => {
-    console.log('imageLoaded state changed:', imageLoaded);
-  }, [imageLoaded]);
 
   return (
     <>
@@ -91,14 +85,16 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             background-color: rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(6px);
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: opacity 0.3s ease;
             pointer-events: none;
             border: 1px solid rgba(255, 255, 255, 0.15);
+            visibility: hidden;
           }
           
           .nav-arrow.loaded {
             opacity: 0.4 !important;
             pointer-events: auto !important;
+            visibility: visible !important;
           }
           
           .nav-arrow-left {
@@ -180,14 +176,8 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             <img
               src={`${config.mediaBaseUrl}/thumbs/${config.thumbnailSizes.large}/${image.imageFilename.replace(/\.[^.]+$/, '')}.webp`}
               alt={`${image.displayName} (${image.objectId})`}
-              onLoad={() => {
-                console.log('Image loaded successfully');
-                setImageLoaded(true);
-              }}
-              onError={() => {
-                console.log('Image failed to load');
-                setImageLoaded(true);
-              }} // Show arrows even if image fails to load
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)} // Show arrows even if image fails to load
               style={{
                 maxWidth: '100%',
                 maxHeight: '100%',
@@ -201,9 +191,6 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
                 href={`/gallery/${prevId}`}
                 className={`nav-arrow nav-arrow-left ${imageLoaded ? 'loaded' : ''}`}
                 aria-label="Previous image"
-                style={{ 
-                  border: imageLoaded ? '2px solid red' : '2px solid blue' // Debug border
-                }}
               >
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m15 18-6-6 6-6"/>
@@ -216,9 +203,6 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
                 href={`/gallery/${nextId}`}
                 className={`nav-arrow nav-arrow-right ${imageLoaded ? 'loaded' : ''}`}
                 aria-label="Next image"
-                style={{ 
-                  border: imageLoaded ? '2px solid red' : '2px solid blue' // Debug border
-                }}
               >
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="m9 18 6-6-6-6"/>
