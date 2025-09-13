@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #1f2937;
+  --background: #1a1a1a;
   --foreground: #ededed;
 }
 
@@ -21,31 +21,31 @@ html {
 
 /* Force gray background on all main containers */
 .min-h-screen {
-  background-color: #1f2937 !important;
+  background-color: #1a1a1a !important;
 }
 
 /* Override any Tailwind background classes */
 .bg-gray-800 {
-  background-color: #1f2937 !important;
+  background-color: #1a1a1a !important;
 }
 
 .bg-gray-900 {
-  background-color: #1f2937 !important;
+  background-color: #1a1a1a !important;
 }
 
 /* Force background on body and html */
 html, body {
-  background-color: #1f2937 !important;
+  background-color: #1a1a1a !important;
 }
 
 /* Override any blue backgrounds */
 .bg-blue-600, .bg-blue-700, .bg-blue-800, .bg-blue-900 {
-  background-color: #1f2937 !important;
+  background-color: #1a1a1a !important;
 }
 
 /* Force background on all elements */
 * {
-  background-color: #1f2937 !important;
+  background-color: #1a1a1a !important;
 }
 
 /* But restore specific elements */
@@ -61,14 +61,14 @@ button, .bg-blue-600, .bg-blue-700 {
 
 /* Nuclear option - override everything with maximum specificity */
 html[style*="background-color"] {
-  background-color: #1f2937 !important;
+  background-color: #1a1a1a !important;
 }
 
 body[style*="background-color"] {
-  background-color: #1f2937 !important;
+  background-color: #1a1a1a !important;
 }
 
 /* Override any inline styles */
 html[style], body[style] {
-  background-color: #1f2937 !important;
+  background-color: #1a1a1a !important;
 }

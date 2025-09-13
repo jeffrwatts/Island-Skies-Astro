@@ -28,7 +28,7 @@ export default function GalleryPageClient({ image, prevId, nextId }: GalleryPage
             left: 0;
             width: 100vw;
             height: 100dvh;
-            background-color: #1f2937;
+            background-color: #1a1a1a;
             padding: 0.5rem;
             display: flex;
             flex-direction: column;

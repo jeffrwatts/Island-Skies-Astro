@@ -38,7 +38,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} antialiased text-white min-h-screen flex flex-col`}
-            style={{ backgroundColor: '#1f2937' }}
+            style={{ backgroundColor: '#1a1a1a' }}
         suppressHydrationWarning={true}
       >
         <Navbar />

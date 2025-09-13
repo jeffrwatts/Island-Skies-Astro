@@ -21,7 +21,7 @@ export default function ImageCard({ image }: ImageCardProps) {
         {/* Overlay with title */}
         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-end">
           <div className="p-3 sm:p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <h3 className="font-semibold text-sm sm:text-lg leading-tight text-gray-200">{image.displayName}</h3>
+            <h3 className="font-semibold text-sm sm:text-lg leading-tight text-gray-300">{image.displayName}</h3>
             <p className="text-xs sm:text-sm text-gray-300">{image.constellation}</p>
           </div>
         </div>
